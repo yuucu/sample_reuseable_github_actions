@@ -1,0 +1,79 @@
+name: Test and Lint
+
+# シンプルなテスト・リントを実行するreusable workflow
+# 軽量で高速、必要最小限の機能のみ提供
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        description: 'Node.js version to use'
+        required: false
+        type: string
+        default: '20'
+      package-manager:
+        description: 'Package manager (npm, yarn, pnpm)'
+        required: false
+        type: string
+        default: 'npm'
+      run-tests:
+        description: 'Run tests'
+        required: false
+        type: boolean
+        default: true
+      run-lint:
+        description: 'Run linter'
+        required: false
+        type: boolean
+        default: true
+      working-directory:
+        description: 'Working directory'
+        required: false
+        type: string
+        default: '.'
+
+jobs:
+  test-lint:
+    name: Test and Lint
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: ${{ inputs.package-manager }}
+      
+      - name: Install dependencies
+        run: |
+          case "${{ inputs.package-manager }}" in
+            npm) npm ci ;;
+            yarn) yarn install --frozen-lockfile ;;
+            pnpm) pnpm install --frozen-lockfile ;;
+            *) echo "Unsupported package manager" && exit 1 ;;
+          esac
+      
+      - name: Run linter
+        if: ${{ inputs.run-lint }}
+        run: |
+          case "${{ inputs.package-manager }}" in
+            npm) npm run lint ;;
+            yarn) yarn lint ;;
+            pnpm) pnpm lint ;;
+          esac
+      
+      - name: Run tests
+        if: ${{ inputs.run-tests }}
+        run: |
+          case "${{ inputs.package-manager }}" in
+            npm) npm test ;;
+            yarn) yarn test ;;
+            pnpm) pnpm test ;;
+          esac
