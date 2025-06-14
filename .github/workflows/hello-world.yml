@@ -9,6 +9,8 @@ on:
         required: false
         type: string
         default: 'Hello, World!'
+  push:
+    branches: [ main, develop ]
 
 jobs:
   hello:

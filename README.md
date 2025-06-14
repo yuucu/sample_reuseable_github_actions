@@ -5,8 +5,11 @@
 ## 📁 構成
 
 ```
+.github/
+└── workflows/
+    └── hello-world.yml    # Hello World reusable workflow
 example/
-└── reusable.yml    # Hello World reusable workflow
+└── reusable.yml           # 使用例
 ```
 
 ## 🔄 Hello World Reusable Workflow
@@ -28,7 +31,7 @@ on: [push]
 
 jobs:
   hello:
-    uses: ./.github/workflows/reusable.yml
+    uses: ./.github/workflows/hello-world.yml
 ```
 
 ### カスタムメッセージ
@@ -39,7 +42,7 @@ on: [push]
 
 jobs:
   hello:
-    uses: ./.github/workflows/reusable.yml
+    uses: ./.github/workflows/hello-world.yml
     with:
       message: "こんにちは、世界！"
 ```
@@ -49,7 +52,7 @@ jobs:
 ```yaml
 jobs:
   hello:
-    uses: your-org/githubactions_sample/.github/workflows/reusable.yml@main
+    uses: yuucu/sample_reuseable_github_actions/.github/workflows/hello-world.yml@main
     with:
       message: "Hello from external repo!"
 ```
