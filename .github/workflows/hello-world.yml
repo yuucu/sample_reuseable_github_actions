@@ -1,0 +1,19 @@
+name: Hello World Reusable Workflow
+
+# 再利用可能なワークフロー - Hello World
+on:
+  workflow_call:
+    inputs:
+      message:
+        description: 'Hello World メッセージをカスタマイズ'
+        required: false
+        type: string
+        default: 'Hello, World!'
+
+jobs:
+  hello:
+    name: Hello World
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say Hello
+        run: echo "${{ inputs.message }}"
