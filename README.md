@@ -8,8 +8,6 @@
 .github/
 └── workflows/
     └── hello-world.yml    # Hello World reusable workflow
-example/
-└── reusable.yml           # 使用例
 ```
 
 ## 🔄 Hello World Reusable Workflow
