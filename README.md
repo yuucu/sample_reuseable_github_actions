@@ -50,12 +50,25 @@ jobs:
 ### 外部リポジトリから使用
 
 ```yaml
+name: Hello World Reusable Workflow
+
+# 再利用可能なワークフロー - Hello World
+on:
+  push:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
 jobs:
   hello:
     uses: yuucu/sample_reuseable_github_actions/.github/workflows/hello-world.yml@main
     with:
       message: "Hello from external repo!"
 ```
+
+
+## ✅ 検証済み連携例
+
+- [sample_reuseable_github_actions_02](https://github.com/yuucu/sample_reuseable_github_actions_02)から正常に呼び出し可能
 
 ## 📝 ライセンス
 
